@@ -5,7 +5,7 @@
 	<properties>
 		<build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
 		<vertx.version>4.2.4</vertx.version>
-		<revision>${vertx.version}.0-SNAPSHOT</revision>
+		<revision>${vertx.version}.0</revision>
 		<log4j.version>2.17.1</log4j.version>
 		<slf4j.version>1.7.35</slf4j.version>
 		<commons-collections.version>3.2.2</commons-collections.version>
@@ -44,7 +44,7 @@
 	<profiles>
 		<!-- Deployment profile (required so these plugins are only used when deploying) -->
 		<profile>
-			<id>release</id>
+			<id>deploy</id>
 			<build>
 				<plugins>
 					<!-- Source plugin -->
