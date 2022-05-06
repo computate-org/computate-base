@@ -6,7 +6,7 @@ git status
 git commit
 git push
 mvn clean install deploy -Pdeploy
-git tag 4.1.8.7
+git tag 4.1.8.8
 git push --tags
 
 cd ~/.local/src/computate-vertx
@@ -15,16 +15,16 @@ git status
 git commit
 git push
 mvn clean install deploy -Pdeploy
-git tag 4.1.8.7
+git tag 4.1.8.8
 git push --tags
 
 cd ~/.local/src/computate
-# Update version to 4.1.8.7 in pom.xml
+# Update version to 4.1.8.8 in pom.xml
 git add -i
 git status
 git commit
 git push
 mvn clean install deploy -Pdeploy
-git tag 4.1.8.7
+git tag 4.1.8.8
 git push --tags
 
