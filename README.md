@@ -2,10 +2,12 @@
 
 # :%s/4.2.5.a/4.2.5.b/g
 
+# Update version of computate-base/pom.xml
 # Copy the properties from computate-base/pom.xml to computate/pom.xml
 # Copy the properties from computate-base/pom.xml to computate-org/roles/computate_project_file_enUS/templates/java/pom.xml
 
 cd ~/.local/src/computate-base
+mvn clean install
 git add -i
 git status
 git commit
