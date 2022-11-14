@@ -19,6 +19,7 @@ git tag 4.3.3.17
 git push --tags
 
 cd ~/.local/src/computate-search
+# Update computate parent version and artifact version to 4.3.3.17: vim pom.xml
 # Add release notes based on a compare: https://github.com/computate-org/computate-search/compare/4.3.3.x...main
 vim release/4.3.3.17-release-notes.md
 git add -i
@@ -30,6 +31,7 @@ git tag 4.3.3.17
 git push --tags
 
 cd ~/.local/src/computate-vertx
+# Update computate parent version and artifact version to 4.3.3.17: vim pom.xml
 # Add release notes based on a compare: https://github.com/computate-org/computate-vertx/compare/4.3.3.x...main
 vim release/4.3.3.17-release-notes.md
 git add -i
@@ -41,6 +43,7 @@ git tag 4.3.3.17
 git push --tags
 
 cd ~/.local/src/computate
+# Update computate parent version and artifact version to 4.3.3.17: vim pom.xml
 # Add release notes based on a compare: https://github.com/computate-org/computate/compare/4.3.3.x...main
 vim release/4.3.3.17-release-notes.md
 git add -i
