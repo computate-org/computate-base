@@ -11,5 +11,5 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-You can report a vulnerability here https://github.com/computate-org/computate/security/advisories?state=Triage
+You can report a vulnerability here https://github.com/computate-org/computate-base/security/advisories?state=Triage
 
