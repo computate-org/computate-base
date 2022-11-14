@@ -10,11 +10,11 @@
 # Add release notes based on a compare: https://github.com/computate-org/computate-base/compare/4.3.3.x...main
 
 cd ~/.local/src/computate-base
-mvn clean install
 git add -i
-git status
 git commit
 git push
+git status
+mvn clean install deploy -Pdeploy
 git tag 4.3.3.17
 git push --tags
 
