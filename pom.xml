@@ -50,6 +50,26 @@
 		</license>
 	</licenses>
 
+	<mailingLists>
+		<mailingList>
+			<name>Users</name>
+			<subscribe>https://computate.topicbox.com/groups/computate-base</subscribe>
+			<unsubscribe>https://computate.topicbox.com/groups/computate-base</unsubscribe>
+			<post>mailto:computate-base@computate.topicbox.com</post>
+			<archive>https://computate.topicbox.com/groups/computate-base</archive>
+		</mailingList>
+	</mailingLists>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/computate-org/computate-base/issues</url>
+	</issueManagement>
+
+	<organization>
+		<name>computate.org</name>
+		<url>https://www.computate.org/</url>
+	</organization>
+
 	<developers>
 		<developer>
 			<name>Christopher Tate</name>
@@ -185,13 +205,6 @@
 	</build>
 
 	<distributionManagement>
-
-		<repository>
-			<id>github</id>
-			<name>GitHub OWNER Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/computate-org/computate-base</url>
-		</repository>
-
 		<!-- Central Repository -->
 		<snapshotRepository>
 			<id>ossrh</id>
