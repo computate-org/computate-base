@@ -3,46 +3,50 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<properties>
-		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
-		<vertx-maven-plugin.version>1.0.18</vertx-maven-plugin.version>
-		<build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
-		<exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+		<vertx-maven-plugin.version>1.0.28</vertx-maven-plugin.version>
+		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
+		<exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+		<flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
+		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+		<maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+		<postgresql.version>42.5.1</postgresql.version>
+		<junit.version>5.9.1</junit.version>
+		<junit-platform-launcher.version>1.4.2</junit-platform-launcher.version>
+		<mockito.version>4.10.0</mockito.version>
 		<vertx-base.version>4.3.3</vertx-base.version>
 		<vertx.version>${vertx-base.version}.redhat-00006</vertx.version>
-		<log4j.version>2.17.2</log4j.version>
-		<log4j-slf4j-impl.version>2.17.1.redhat-00002</log4j-slf4j-impl.version>
-		<slf4j.version>1.7.36.redhat-00001</slf4j.version>
-		<solr.version>8.11.1</solr.version>
-		<jackson.version>2.14.0</jackson.version>
-		<jackson-databind.version>2.14.0</jackson-databind.version>
-		<commons-lang3.version>3.12.0.redhat-00001</commons-lang3.version>
-		<junit.version>4.13.1</junit.version>
-		<commons-collections.version>4.2.0.redhat-00001</commons-collections.version>
-		<commons-configuration2.version>2.8.0</commons-configuration2.version>
-		<snakeyaml.version>1.30.0.redhat-00002</snakeyaml.version>
-		<postgresql.version>42.5.0</postgresql.version>
-		<camel.version>3.11.5.fuse-800012-redhat-00004</camel.version>
-		<kie.version>7.59.0.Final-redhat-00010</kie.version>
-		<drools.version>7.59.0.Final-redhat-00010</drools.version>
-		<cloudevents.version>2.3.0</cloudevents.version>
 		<jfreechart.version>1.5.3</jfreechart.version>
 		<handlebars.version>4.3.1</handlebars.version>
 		<flying-saucer.version>9.1.22</flying-saucer.version>
 		<openpdf.version>1.3.30</openpdf.version>
-		<itext.version>5.2.0</itext.version>
+		<itext-asian.version>5.2.0</itext-asian.version>
 		<commons-text.version>1.10.0</commons-text.version>
-		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-		<maven-source-plugin.version>2.4</maven-source-plugin.version>
-		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
-		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
+		<log4j.version>2.19.0</log4j.version>
+		<log4j-slf4j-impl.version>2.19.0</log4j-slf4j-impl.version>
+		<slf4j.version>2.0.6</slf4j.version>
+		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+		<solr.version>8.11.1</solr.version>
+		<jackson.version>2.14.1</jackson.version>
+		<jackson-databind.version>2.14.1</jackson-databind.version>
+		<commons-lang3.version>3.12.0.redhat-00001</commons-lang3.version>
+		<commons-configuration2.version>2.8.0</commons-configuration2.version>
+		<snakeyaml.version>1.33.0.redhat-00001</snakeyaml.version>
+		<camel.version>3.18.3.redhat-00022</camel.version>
+		<kie.version>7.67.0.Final-redhat-00017</kie.version>
+		<drools.version>8.32.0.Final</drools.version>
+		<cloudevents.version>2.4.0</cloudevents.version>
 	</properties>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.computate</groupId>
 	<artifactId>computate-base</artifactId>
-	<version>4.3.3.18</version>
+	<version>4.3.3.19</version>
 	<packaging>pom</packaging>
 	<name>Computate base project with default properties</name>
 	<description>Computate base project with default properties. </description>
