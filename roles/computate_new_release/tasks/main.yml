@@ -1,0 +1,282 @@
+---
+
+#- name: |
+#    Ensure {{ COMPUTATE_BASE_NAME }} project has no uncommitted changes
+#  shell:
+#    cmd: git status -s -uall
+#    chdir: "{{ COMPUTATE_BASE_SRC }}"
+#  register: GIT_STATUS_COMPUTATE_BASE
+#- fail:
+#    msg: |
+#      The {{ COMPUTATE_BASE_NAME }} project has uncommitted changes
+#  when: GIT_STATUS_COMPUTATE_BASE.stdout_lines | length > 0
+
+- name: |
+    Ensure {{ COMPUTATE_SEARCH_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  register: GIT_STATUS_COMPUTATE_SEARCH
+- fail:
+    msg: |
+      The {{ COMPUTATE_SEARCH_NAME }} project has uncommitted changes
+  when: GIT_STATUS_COMPUTATE_SEARCH.stdout_lines | length > 0
+
+- name: |
+    Ensure {{ COMPUTATE_VERTX_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  register: GIT_STATUS_COMPUTATE_VERTX
+- fail:
+    msg: |
+      The {{ COMPUTATE_VERTX_NAME }} project has uncommitted changes
+  when: GIT_STATUS_COMPUTATE_VERTX.stdout_lines | length > 0
+
+- name: |
+    Ensure {{ COMPUTATE_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_SRC }}"
+  register: GIT_STATUS_COMPUTATE
+- fail:
+    msg: |
+      The {{ COMPUTATE_NAME }} project has uncommitted changes
+  when: GIT_STATUS_COMPUTATE.stdout_lines | length > 0
+
+- name: |
+    Find the current computate version
+  set_fact:
+    PREV_VERSION: "{{ lookup('file', COMPUTATE_SRC + '/pom.xml') | regex_search('<version>([^<]+)</version>', '\\1', multiline=True) | first }}"
+- name: |
+    Find the current computate version prefix and suffix
+  set_fact:
+    PREV_VERSION_PREFIX: "{{ PREV_VERSION | regex_search('^([\\d\\.]+?\\.)(\\d+)$', '\\1', multiline=True) | first }}"
+    PREV_VERSION_SUFFIX: "{{ PREV_VERSION | regex_search('^([\\d\\.]+?\\.)(\\d+)$', '\\2', multiline=True) | first }}"
+- debug:
+    var: PREV_VERSION_PREFIX
+- debug:
+    var: PREV_VERSION_SUFFIX
+
+- name: |
+    Validate NEXT_VERSION specified
+  fail:
+    msg: >-
+      NEXT_VERSION not specified.
+      Current computate version is {{ PREV_VERSION }}.
+      Run the playbook again with the NEXT VERSION set:
+      ansible-playbook computate_new_release.yml -e NEXT_VERSION={{ PREV_VERSION_PREFIX }}{{ (PREV_VERSION_SUFFIX | int) + 1 }}
+  when: NEXT_VERSION is not defined
+
+- name: |
+    Update the version in {{ COMPUTATE_BASE_NAME }}/pom.xml from {{ PREV_VERSION }} to {{ NEXT_VERSION }}
+  ansible.builtin.replace:
+    path: "{{ COMPUTATE_BASE_SRC }}/pom.xml"
+    regexp: '>{{ PREV_VERSION }}<'
+    replace: '>{{ NEXT_VERSION }}<'
+- name: |
+    Ensure {{ COMPUTATE_BASE_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  register: GIT_STATUS_COMPUTATE_BASE_2
+- name: |
+    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_BASE_NAME }}
+  shell:
+    cmd: mvn clean install deploy -Pdeploy
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
+- name: |
+    git add {{ COMPUTATE_BASE_NAME }}/pom.xml
+  shell:
+    cmd: git add {{ COMPUTATE_BASE_SRC }}/pom.xml
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
+- name: |
+    git commit {{ COMPUTATE_BASE_NAME }}/pom.xml
+  shell:
+    cmd: git commit -m "Releasing version {{ NEXT_VERSION }}"
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
+- name: |
+    git push {{ COMPUTATE_BASE_NAME }}/pom.xml
+  shell:
+    cmd: git push
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
+- name: |
+    {{ COMPUTATE_BASE_NAME }} git tag {{ NEXT_VERSION }}
+  shell:
+    cmd: git tag {{ NEXT_VERSION }}
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
+- name: |
+    git push --tags
+  shell:
+    cmd: git push --tags
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
+
+- name: |
+    Update the version in {{ COMPUTATE_SEARCH_NAME }}/pom.xml from {{ PREV_VERSION }} to {{ NEXT_VERSION }}
+  ansible.builtin.replace:
+    path: "{{ COMPUTATE_SEARCH_SRC }}/pom.xml"
+    regexp: '>{{ PREV_VERSION }}<'
+    replace: '>{{ NEXT_VERSION }}<'
+- name: |
+    Ensure {{ COMPUTATE_SEARCH_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  register: GIT_STATUS_COMPUTATE_SEARCH_2
+- name: |
+    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_SEARCH_NAME }}
+  shell:
+    cmd: mvn clean install deploy -Pdeploy
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
+- name: |
+    git add {{ COMPUTATE_SEARCH_NAME }}/pom.xml
+  shell:
+    cmd: git add {{ COMPUTATE_SEARCH_SRC }}/pom.xml
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
+- name: |
+    git commit {{ COMPUTATE_SEARCH_NAME }}/pom.xml
+  shell:
+    cmd: git commit -m "Releasing version {{ NEXT_VERSION }}"
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
+- name: |
+    git push {{ COMPUTATE_SEARCH_NAME }}/pom.xml
+  shell:
+    cmd: git push
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
+- name: |
+    {{ COMPUTATE_SEARCH_NAME }} git tag {{ NEXT_VERSION }}
+  shell:
+    cmd: git tag {{ NEXT_VERSION }}
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
+- name: |
+    git push --tags
+  shell:
+    cmd: git push --tags
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
+
+- name: |
+    Update the version in {{ COMPUTATE_VERTX_NAME }}/pom.xml from {{ PREV_VERSION }} to {{ NEXT_VERSION }}
+  ansible.builtin.replace:
+    path: "{{ COMPUTATE_VERTX_SRC }}/pom.xml"
+    regexp: '>{{ PREV_VERSION }}<'
+    replace: '>{{ NEXT_VERSION }}<'
+- name: |
+    Ensure {{ COMPUTATE_VERTX_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  register: GIT_STATUS_COMPUTATE_VERTX_2
+- name: |
+    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_VERTX_NAME }}
+  shell:
+    cmd: mvn clean install deploy -Pdeploy
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
+- name: |
+    git add {{ COMPUTATE_VERTX_NAME }}/pom.xml
+  shell:
+    cmd: git add {{ COMPUTATE_VERTX_SRC }}/pom.xml
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
+- name: |
+    git commit {{ COMPUTATE_VERTX_NAME }}/pom.xml
+  shell:
+    cmd: git commit -m "Releasing version {{ NEXT_VERSION }}"
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
+- name: |
+    git push {{ COMPUTATE_VERTX_NAME }}/pom.xml
+  shell:
+    cmd: git push
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
+- name: |
+    {{ COMPUTATE_VERTX_NAME }} git tag {{ NEXT_VERSION }}
+  shell:
+    cmd: git tag {{ NEXT_VERSION }}
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
+- name: |
+    git push --tags
+  shell:
+    cmd: git push --tags
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
+
+- name: |
+    Update the version in {{ COMPUTATE_NAME }}/pom.xml from {{ PREV_VERSION }} to {{ NEXT_VERSION }}
+  ansible.builtin.replace:
+    path: "{{ COMPUTATE_SRC }}/pom.xml"
+    regexp: '>{{ PREV_VERSION }}<'
+    replace: '>{{ NEXT_VERSION }}<'
+- name: |
+    Ensure {{ COMPUTATE_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_SRC }}"
+  register: GIT_STATUS_COMPUTATE_2
+- name: |
+    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_NAME }}
+  shell:
+    cmd: mvn clean install deploy -Pdeploy
+    chdir: "{{ COMPUTATE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
+- name: |
+    git add {{ COMPUTATE_NAME }}/pom.xml
+  shell:
+    cmd: git add {{ COMPUTATE_SRC }}/pom.xml
+    chdir: "{{ COMPUTATE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
+- name: |
+    git commit {{ COMPUTATE_NAME }}/pom.xml
+  shell:
+    cmd: git commit -m "Releasing version {{ NEXT_VERSION }}"
+    chdir: "{{ COMPUTATE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
+- name: |
+    git push {{ COMPUTATE_NAME }}/pom.xml
+  shell:
+    cmd: git push
+    chdir: "{{ COMPUTATE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
+- name: |
+    {{ COMPUTATE_NAME }} git tag {{ NEXT_VERSION }}
+  shell:
+    cmd: git tag {{ NEXT_VERSION }}
+    chdir: "{{ COMPUTATE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
+- name: |
+    git push --tags
+  shell:
+    cmd: git push --tags
+    chdir: "{{ COMPUTATE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
+
+- name: |
+    Create a {{ COMPUTATE_BASE_NAME }} {{ NEXT_VERSION }} tag in GitHub
+  shell:
+    cmd: xdg-open https://github.com/computate-org/{{ COMPUTATE_BASE_NAME }}/releases/tag/{{ NEXT_VERSION }}
+- name: |
+    Create a {{ COMPUTATE_SEARCH_NAME }} {{ NEXT_VERSION }} tag in GitHub
+  shell:
+    cmd: xdg-open https://github.com/computate-org/{{ COMPUTATE_SEARCH_NAME }}/releases/tag/{{ NEXT_VERSION }}
+- name: |
+    Create a {{ COMPUTATE_VERTX_NAME }} {{ NEXT_VERSION }} tag in GitHub
+  shell:
+    cmd: xdg-open https://github.com/computate-org/{{ COMPUTATE_VERTX_NAME }}/releases/tag/{{ NEXT_VERSION }}
+- name: |
+    Create a {{ COMPUTATE_NAME }} {{ NEXT_VERSION }} tag in GitHub
+  shell:
+    cmd: xdg-open https://github.com/computate-org/{{ COMPUTATE_NAME }}/releases/tag/{{ NEXT_VERSION }}

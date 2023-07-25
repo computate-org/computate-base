@@ -1,0 +1,7 @@
+---
+- name: Create a new release of the computate software
+  connection: local
+  hosts: localhost
+  roles:
+    - computate_new_release
+

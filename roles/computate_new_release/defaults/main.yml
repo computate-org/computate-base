@@ -1,0 +1,15 @@
+---
+APP_PREFIX: "{{ lookup('env', 'HOME') }}/.local"
+
+COMPUTATE_BASE_NAME: "computate-base"
+COMPUTATE_BASE_SRC: "{{ APP_PREFIX }}/src/{{ COMPUTATE_BASE_NAME }}"
+
+COMPUTATE_SEARCH_NAME: "computate-search"
+COMPUTATE_SEARCH_SRC: "{{ APP_PREFIX }}/src/{{ COMPUTATE_SEARCH_NAME }}"
+
+COMPUTATE_VERTX_NAME: "computate-vertx"
+COMPUTATE_VERTX_SRC: "{{ APP_PREFIX }}/src/{{ COMPUTATE_VERTX_NAME }}"
+
+COMPUTATE_NAME: "computate"
+COMPUTATE_SRC: "{{ APP_PREFIX }}/src/{{ COMPUTATE_NAME }}"
+
