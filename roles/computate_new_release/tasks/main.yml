@@ -1,15 +1,15 @@
 ---
 
-#- name: |
-#    Ensure {{ COMPUTATE_BASE_NAME }} project has no uncommitted changes
-#  shell:
-#    cmd: git status -s -uall
-#    chdir: "{{ COMPUTATE_BASE_SRC }}"
-#  register: GIT_STATUS_COMPUTATE_BASE
-#- fail:
-#    msg: |
-#      The {{ COMPUTATE_BASE_NAME }} project has uncommitted changes
-#  when: GIT_STATUS_COMPUTATE_BASE.stdout_lines | length > 0
+- name: |
+    Ensure {{ COMPUTATE_BASE_NAME }} project has no uncommitted changes
+  shell:
+    cmd: git status -s -uall
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  register: GIT_STATUS_COMPUTATE_BASE
+- fail:
+    msg: |
+      The {{ COMPUTATE_BASE_NAME }} project has uncommitted changes
+  when: GIT_STATUS_COMPUTATE_BASE.stdout_lines | length > 0
 
 - name: |
     Ensure {{ COMPUTATE_SEARCH_NAME }} project has no uncommitted changes
@@ -280,3 +280,7 @@
     Create a {{ COMPUTATE_NAME }} {{ NEXT_VERSION }} tag in GitHub
   shell:
     cmd: xdg-open https://github.com/computate-org/{{ COMPUTATE_NAME }}/releases/tag/{{ NEXT_VERSION }}
+- name: |
+    Send an update on the computate mailing list
+  shell:
+    cmd: xdg-open https://computate.topicbox.com/groups/computate
