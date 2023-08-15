@@ -1,5 +1,18 @@
 # Publish the open source libraries
 
+Run the following Ansible playbook to begin the new release: 
+
+```bash
+ansible-playbook computate_new_release.yml
+```
+
+The run will fail, but it will tell you what the next release number will be. Run the playbook again with the desired release version specified: 
+
+
+```bash
+ansible-playbook computate_new_release.yml -e NEXT_VERSION=4.2.7.26
+```
+
 # :%s/4.2.7.a/4.2.7.b/g
 
 # Update version of computate-base/pom.xml
