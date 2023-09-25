@@ -55,7 +55,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.computate</groupId>
 	<artifactId>computate-base</artifactId>
-	<version>4.2.7.27</version>
+	<version>4.2.7.28</version>
 	<packaging>pom</packaging>
 	<name>Computate base project with default properties</name>
 	<description>Computate base project with default properties. </description>
