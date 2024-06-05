@@ -38,6 +38,8 @@
 		<kie.version>7.67.0.Final-redhat-00017</kie.version>
 		<drools.version>8.32.0.Final</drools.version>
 		<cloudevents.version>2.4.0</cloudevents.version>
+		<jinjava.version>2.7.2</jinjava.version>
+		<kubernetes-client.version>15.0.1</kubernetes-client.version>
 
 		<quarkus-base.version>3.2.9</quarkus-base.version>
 		<quarkus.version>${quarkus-base.version}.Final-redhat-00002</quarkus.version>
