@@ -40,6 +40,7 @@
 		<jinjava.version>2.7.2</jinjava.version>
 		<snakeyaml.version>2.2</snakeyaml.version>
 		<kubernetes-client.version>20.0.1</kubernetes-client.version>
+		<jsoup.version>1.17.2</jsoup.version>
 
 		<quarkus-base.version>3.2.9</quarkus-base.version>
 		<quarkus.version>${quarkus-base.version}.Final-redhat-00002</quarkus.version>
