@@ -81,9 +81,15 @@
     chdir: "{{ COMPUTATE_BASE_SRC }}"
   register: GIT_STATUS_COMPUTATE_BASE_2
 - name: |
-    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_BASE_NAME }}
+    Run mvn clean install in {{ COMPUTATE_BASE_NAME }}
   shell:
-    cmd: mvn clean install deploy -Pdeploy
+    cmd: mvn clean install
+    chdir: "{{ COMPUTATE_BASE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
+- name: |
+    Run mvn deploy -Pdeploy in {{ COMPUTATE_BASE_NAME }}
+  shell:
+    cmd: mvn deploy -Pdeploy
     chdir: "{{ COMPUTATE_BASE_SRC }}"
   when: GIT_STATUS_COMPUTATE_BASE_2.stdout_lines | length > 0
 - name: |
@@ -130,9 +136,15 @@
     chdir: "{{ COMPUTATE_SEARCH_SRC }}"
   register: GIT_STATUS_COMPUTATE_SEARCH_2
 - name: |
-    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_SEARCH_NAME }}
+    Run mvn clean install in {{ COMPUTATE_SEARCH_NAME }}
   shell:
-    cmd: mvn clean install deploy -Pdeploy
+    cmd: mvn clean install
+    chdir: "{{ COMPUTATE_SEARCH_SRC }}"
+  when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
+- name: |
+    Run mvn deploy -Pdeploy in {{ COMPUTATE_SEARCH_NAME }}
+  shell:
+    cmd: mvn deploy -Pdeploy
     chdir: "{{ COMPUTATE_SEARCH_SRC }}"
   when: GIT_STATUS_COMPUTATE_SEARCH_2.stdout_lines | length > 0
 - name: |
@@ -179,9 +191,15 @@
     chdir: "{{ COMPUTATE_VERTX_SRC }}"
   register: GIT_STATUS_COMPUTATE_VERTX_2
 - name: |
-    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_VERTX_NAME }}
+    Run mvn clean install in {{ COMPUTATE_VERTX_NAME }}
   shell:
-    cmd: mvn clean install deploy -Pdeploy
+    cmd: mvn clean install
+    chdir: "{{ COMPUTATE_VERTX_SRC }}"
+  when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
+- name: |
+    Run mvn deploy -Pdeploy in {{ COMPUTATE_VERTX_NAME }}
+  shell:
+    cmd: mvn deploy -Pdeploy
     chdir: "{{ COMPUTATE_VERTX_SRC }}"
   when: GIT_STATUS_COMPUTATE_VERTX_2.stdout_lines | length > 0
 - name: |
@@ -228,9 +246,15 @@
     chdir: "{{ COMPUTATE_SRC }}"
   register: GIT_STATUS_COMPUTATE_2
 - name: |
-    Run mvn clean install deploy -Pdeploy in {{ COMPUTATE_NAME }}
+    Run mvn clean install in {{ COMPUTATE_NAME }}
   shell:
-    cmd: mvn clean install deploy -Pdeploy
+    cmd: mvn clean install
+    chdir: "{{ COMPUTATE_SRC }}"
+  when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
+- name: |
+    Run mvn deploy -Pdeploy in {{ COMPUTATE_NAME }}
+  shell:
+    cmd: mvn deploy -Pdeploy
     chdir: "{{ COMPUTATE_SRC }}"
   when: GIT_STATUS_COMPUTATE_2.stdout_lines | length > 0
 - name: |
