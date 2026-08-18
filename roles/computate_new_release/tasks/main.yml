@@ -305,6 +305,10 @@
   shell:
     cmd: xdg-open https://github.com/computate-org/{{ COMPUTATE_NAME }}/releases/tag/{{ NEXT_VERSION }}
 - name: |
+    Publish your Maven Central deployments
+  shell:
+    cmd: xdg-open https://central.sonatype.com/publishing/deployments
+- name: |
     Send an update on the computate mailing list
   shell:
     cmd: xdg-open https://computate.topicbox.com/groups/computate
